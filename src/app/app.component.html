@@ -1,35 +1,72 @@
-<div class="row">
-  <div class="col-sm-3">
-    <div class="card">
+<div class="container">
+  <h2>World Wide</h2>
+  <div class="d-flex justify-content-between ">
+    <div class="card w-25 mr-2 bg-1">
       <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <p class="card-text">Confirmed</p>
+        <h5 class="card-title">{{worldWideData?.confirmed}}</h5>
+      </div>
+    </div>
+    <div class="card w-25 mr-2 bg-2">
+      <div class="card-body">
+        <p class="card-text">Recovered</p>
+        <h5 class="card-title">{{worldWideData?.recovered}}</h5>
+      </div>
+    </div>
+    <div class="card w-25 mr-2 bg-3">
+      <div class="card-body">
+        <p class="card-text">Deaths</p>
+        <h5 class="card-title">{{worldWideData?.deaths}}</h5>
+      </div>
+    </div>
+    <div class="card w-25 mr-2 bg-4">
+      <div class="card-body">
+        <p class="card-text">Fatality Rate</p>
+        <h5 class="card-title">{{(worldWideData?.deaths/worldWideData?.confirmed) | percent}}</h5>
+      </div>
+    </div>
+  </div>
 
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-3">
-    <div class="card">
+  <h2 class="mt-4">Regional</h2>
+  <select class="mb-2" (change)="selectCountry($event.target.value)">
+    <option *ngFor="let c of countryCodes" [selected]="c.value === selectedCountry" [value]="c?.value">{{c.label}}</option>
+  </select>
+  <div class="d-flex justify-content-between ">
+    <div class="card w-25 mr-2 bg-1">
       <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <p class="card-text">Confirmed</p>
+        <h5 class="card-title">{{regional?.confirmed}}</h5>
       </div>
     </div>
-  </div>
-  <div class="col-sm-3">
-    <div class="card">
+    <div class="card w-25 mr-2 bg-2">
       <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <p class="card-text">Recovered</p>
+        <h5 class="card-title">{{regional?.recovered}}</h5>
       </div>
     </div>
-  </div>
-  <div class="col-sm-3">
-    <div class="card">
+    <div class="card w-25 mr-2 bg-3">
       <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <p class="card-text">Deaths</p>
+        <h5 class="card-title">{{regional?.deaths}}</h5>
+      </div>
+    </div>
+    <div class="card w-25 mr-2 bg-4">
+      <div class="card-body">
+        <p class="card-text">Fatality Rate</p>
+        <h5 class="card-title">{{(regional?.deaths/regional?.confirmed) | percent}}</h5>
       </div>
     </div>
   </div>
+  <div style="height: 300px;width: 500px;"
+     leaflet
+     [leafletOptions]="options"
+     [(leafletZoom)]="zoom"
+     [(leafletCenter)]="center"
+     [leafletLayers]="layers">
 </div>
+<ng-container *ngIf="chartLine.length > 0">
+  <app-chart [chartLine]="chartLine"></app-chart>
+</ng-container>
+</div>
+
+
